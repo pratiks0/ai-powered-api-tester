@@ -42,24 +42,30 @@ export const sendRequest = async (req, res) => {
       // Don't fail the request if history save fails
     }
 
-    // Generate documentation based on response status
-    const documentation = response.status >= 200 && response.status < 300
-      ? await generateDocumentation({
-          method,
-          url,
-          response: response.data,
-          statusCode: response.status
-        })
-      : await explainError({
-          error: response.data,
-          statusCode: response.status
-        });
+    // Generate documentation or error explanation based on response status
+    let documentation;
+    let explanation;
+
+    if (response.status >= 200 && response.status < 300) {
+      documentation = await generateDocumentation({
+        method,
+        url,
+        response: response.data,
+        statusCode: response.status
+      });
+    } else {
+      explanation = await explainError({
+        error: response.data,
+        statusCode: response.status
+      });
+    }
 
     res.json({
       status: response.status,
       data: response.data,
       headers: response.headers,
-      documentation
+      documentation,
+      explanation
     });
 
   } catch (error) {

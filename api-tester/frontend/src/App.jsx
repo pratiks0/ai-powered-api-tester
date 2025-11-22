@@ -1,38 +1,42 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CollectionsProvider } from './context/CollectionsContext';
+import { RequestProvider } from './context/RequestContext';
+import Layout from './components/Layout';
 import RequestBuilder from './components/RequestBuilder';
 import ResponseViewer from './components/ResponseViewer';
-import HistorySidebar from './components/HistorySidebar';
-import CollectionsSidebar from './components/CollectionsSidebar';
-import { CollectionsProvider } from './context/CollectionsContext';
+import HistoryPage from './pages/HistoryPage';
 
 const queryClient = new QueryClient();
+
+function RequestPage() {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+      <div className="h-full overflow-hidden flex flex-col">
+        <RequestBuilder />
+      </div>
+      <div className="h-full overflow-hidden flex flex-col">
+        <ResponseViewer />
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CollectionsProvider>
-        <div className="min-h-screen bg-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-8">
-              AI-Powered API Tester
-            </h1>
-            
-            <div className="grid grid-cols-12 gap-8">
-              {/* Sidebars */}
-              <div className="col-span-3 space-y-8">
-                <CollectionsSidebar />
-                <HistorySidebar />
-              </div>
-              
-              {/* Main content */}
-              <div className="col-span-9 space-y-8">
-                <RequestBuilder />
-                <ResponseViewer />
-              </div>
-            </div>
-          </div>
-        </div>
+        <RequestProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<RequestPage />} />
+                <Route path="history" element={<HistoryPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </RequestProvider>
       </CollectionsProvider>
     </QueryClientProvider>
   );
