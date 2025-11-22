@@ -45,12 +45,6 @@ const Layout = () => {
             History
           </NavLink>
         </nav>
-
-        <div className="p-4 border-t border-border">
-          <div className="text-xs text-text-secondary text-center">
-            Obsidian Sharp Theme
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}

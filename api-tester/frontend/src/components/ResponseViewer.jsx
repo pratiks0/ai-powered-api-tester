@@ -6,14 +6,9 @@ import { marked } from 'marked';
 const ResponseViewer = () => {
   const { response, error, isLoading } = useRequest();
 
-  console.log('ResponseViewer state:', { response, error, isLoading }); // Debug log
-
   if (isLoading) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-text-secondary space-y-4">
-        <div className="absolute top-0 left-0 p-2 text-xs text-red-500 bg-white z-50">
-          DEBUG: Loading: {isLoading.toString()}, Response: {response ? 'Yes' : 'No'}, Error: {error ? 'Yes' : 'No'}
-        </div>
         <div className="relative w-16 h-16">
           <div className="absolute inset-0 border-4 border-border rounded-full"></div>
           <div className="absolute inset-0 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
@@ -26,9 +21,6 @@ const ResponseViewer = () => {
   if (error) {
     return (
       <div className="h-full flex flex-col">
-        <div className="absolute top-0 left-0 p-2 text-xs text-red-500 bg-white z-50">
-          DEBUG: Loading: {isLoading.toString()}, Response: {response ? 'Yes' : 'No'}, Error: {error ? 'Yes' : 'No'}
-        </div>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-red-400 flex items-center gap-2">
             <span className="w-2 h-2 bg-red-500 rounded-full"></span>
@@ -45,9 +37,6 @@ const ResponseViewer = () => {
   if (!response) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-text-secondary opacity-50">
-        <div className="absolute top-0 left-0 p-2 text-xs text-red-500 bg-white z-50">
-          DEBUG: Loading: {isLoading.toString()}, Response: {response ? 'Yes' : 'No'}, Error: {error ? 'Yes' : 'No'}
-        </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-24 h-24 mb-4">
           <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
         </svg>
@@ -60,9 +49,6 @@ const ResponseViewer = () => {
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
-      <div className="absolute top-0 left-0 p-2 text-xs text-red-500 bg-white z-50">
-        DEBUG: Loading: {isLoading.toString()}, Response: {response ? 'Yes' : 'No'}, Error: {error ? 'Yes' : 'No'}
-      </div>
       <div className="flex justify-between items-center mb-6 shrink-0">
         <h2 className="text-lg font-semibold text-text-primary flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${status < 300 ? 'bg-green-500' : status < 400 ? 'bg-yellow-500' : 'bg-red-500'}`}></span>
