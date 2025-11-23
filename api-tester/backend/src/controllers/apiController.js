@@ -140,3 +140,29 @@ export const getHistory = async (req, res) => {
     });
   }
 };
+
+export const deleteHistoryItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await RequestHistory.findByIdAndDelete(id);
+    
+    if (!result) {
+      return res.status(404).json({ error: 'History item not found' });
+    }
+
+    res.json({ message: 'History item deleted successfully' });
+  } catch (error) {
+    console.error('Delete history item error:', error);
+    res.status(500).json({ error: 'Failed to delete history item' });
+  }
+};
+
+export const clearHistory = async (req, res) => {
+  try {
+    await RequestHistory.deleteMany({});
+    res.json({ message: 'History cleared successfully' });
+  } catch (error) {
+    console.error('Clear history error:', error);
+    res.status(500).json({ error: 'Failed to clear history' });
+  }
+};

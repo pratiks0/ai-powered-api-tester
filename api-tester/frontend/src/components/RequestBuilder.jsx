@@ -12,7 +12,23 @@ const RequestBuilder = () => {
   const [headerError, setHeaderError] = useState('');
   const [bodyError, setBodyError] = useState('');
   
-  const { sendRequest, isLoading } = useRequest();
+  const { sendRequest, isLoading, requestDraft } = useRequest();
+
+  // Update local state when requestDraft changes (e.g. from history)
+  React.useEffect(() => {
+    if (requestDraft) {
+      setRequest({
+        method: requestDraft.method || 'GET',
+        url: requestDraft.url || '',
+        headers: typeof requestDraft.headers === 'string' 
+          ? requestDraft.headers 
+          : JSON.stringify(requestDraft.headers || {}, null, 2),
+        body: typeof requestDraft.body === 'string'
+          ? requestDraft.body
+          : JSON.stringify(requestDraft.body || {}, null, 2)
+      });
+    }
+  }, [requestDraft]);
 
   const validateAndSubmit = (e) => {
     if (e) e.preventDefault();

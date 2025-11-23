@@ -62,11 +62,15 @@ export const RequestProvider = ({ children }) => {
     }
   );
 
+  const [requestDraft, setRequestDraft] = React.useState(null);
+
   const value = {
     sendRequest: mutate,
     isLoading,
     error,
-    response: data
+    response: data,
+    requestDraft,
+    setRequestDraft
   };
 
   return (
