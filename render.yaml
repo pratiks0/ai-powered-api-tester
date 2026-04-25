@@ -8,7 +8,7 @@ services:
     branch: main
     rootDir: api-tester/backend
     autoDeploy: true
-    buildCommand: "npm install --no-fund --no-audit"
+    buildCommand: "npm install --no-fund --no-audit || npm install --no-fund --no-audit --legacy-peer-deps"
     startCommand: "npm run start"
     envVars:
       - key: PORT
@@ -31,7 +31,7 @@ services:
     branch: main
     rootDir: api-tester/frontend
     autoDeploy: true
-    buildCommand: "npm install --no-fund --no-audit"
+    buildCommand: "npm install --no-fund --no-audit || npm install --no-fund --no-audit --legacy-peer-deps"
     startCommand: "npm run dev -- --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PORT
