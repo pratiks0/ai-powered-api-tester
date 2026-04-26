@@ -24,25 +24,14 @@ services:
       - key: OPENAI_API_KEY
         value: "your-openai-api-key"
   - type: web
-    name: ai-powered-api-tester-frontend
-    runtime: node
+    name: ai-powered-api-tester-static
+    runtime: static
     plan: free
     repo: https://github.com/pratiks0/ai-powered-api-tester
     branch: main
     rootDir: api-tester/frontend
     autoDeploy: true
-    buildCommand: "npm install --no-fund --no-audit || npm install --no-fund --no-audit --legacy-peer-deps"
-    startCommand: "npm run dev -- --host 0.0.0.0 --port $PORT"
+    staticPublishPath: .
     envVars:
       - key: PORT
         value: "10000"
-      - key: HOST
-        sync: false
-      - key: NEXT_PUBLIC_API_URL
-        sync: false
-      - key: NODE_ENV
-        value: "development"
-      - key: REACT_APP_API_URL
-        sync: false
-      - key: VITE_API_URL
-        sync: false
